@@ -5,7 +5,6 @@ export default function handler(req, res) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-
       return res.status(200).json({
         id: user.uid,
         email: user.email,

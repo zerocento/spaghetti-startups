@@ -38,6 +38,8 @@ export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
+  const [disabledButton, setDisabledButton] = useState(false);
+
   const pattern = new RegExp(
     '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}$'
   );
@@ -53,10 +55,8 @@ export default function Signup() {
 
   async function handleSignup(e) {
     e.preventDefault();
-    console.log(password);
-    if (!pattern.test(password)) {
-      alert('errore inserisci i dati corretti');
-    } else {
+    setDisabledButton(true)
+    if (pattern.test(password)) {
       const response = await fetch('/api/signup', {
         method: 'POST',
         headers: {
@@ -79,7 +79,11 @@ export default function Signup() {
           query: { prop: email },
         });
       }
+    }else{
+      alert("La password non rispetta i criteri")
     }
+    setDisabledButton(false)
+    
   }
   return (
     <>
@@ -213,7 +217,7 @@ export default function Signup() {
                     </Grid>
                   </Box>
                 )}
-                <ActionButton text="Registrati Subito!" margin={50} />
+                <ActionButton text="Registrati Subito!" disabled={disabledButton} margin={50} />
               </Box>
               <SeparatorText text="OPPURE" />
               <HStack mt={'20px'}>

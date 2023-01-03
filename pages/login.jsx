@@ -46,7 +46,6 @@ export default function Login() {
 
   async function handleSignup(e) {
     e.preventDefault();
-    console.log(password);
     const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
