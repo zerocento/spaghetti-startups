@@ -5,12 +5,15 @@ import '@fontsource/Poppins/500.css';
 
 import React from 'react';
 import theme from '../theme';
+import { AuthContextProvider } from '../context/authContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <AuthContextProvider>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </AuthContextProvider>
   );
 }
 

@@ -55,7 +55,7 @@ export default function Signup() {
 
   async function handleSignup(e) {
     e.preventDefault();
-    setDisabledButton(true)
+    setDisabledButton(true);
     if (pattern.test(password)) {
       const response = await fetch('/api/signup', {
         method: 'POST',
@@ -79,11 +79,10 @@ export default function Signup() {
           query: { prop: email },
         });
       }
-    }else{
-      alert("La password non rispetta i criteri")
+    } else {
+      alert('La password non rispetta i criteri');
     }
-    setDisabledButton(false)
-    
+    setDisabledButton(false);
   }
   return (
     <>
@@ -217,7 +216,11 @@ export default function Signup() {
                     </Grid>
                   </Box>
                 )}
-                <ActionButton text="Registrati Subito!" disabled={disabledButton} margin={50} />
+                <ActionButton
+                  text="Registrati Subito!"
+                  disabled={disabledButton}
+                  margin={50}
+                />
               </Box>
               <SeparatorText text="OPPURE" />
               <HStack mt={'20px'}>

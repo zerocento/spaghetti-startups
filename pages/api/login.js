@@ -1,26 +1,19 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
+import { getAuth } from 'firebase-admin/auth';
+
 export default function handler(req, res) {
-  return signInWithEmailAndPassword(auth, req.body.email, req.body.password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      return res.status(200).json({
-        id: user.uid,
-        email: user.email,
-        verified: user.emailVerified,
-      });
+  getAuth()
+    .verifyIdToken(req.body.idToken)
+    .then((decodedToken) => {
+      console.log(decodedToken);
+      const uid = decodedToken.uid;
+      getAuth()
+        .getUser(uid)
+        .then((user) => {
+          res.status(200).json({});
+        });
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log({
-        code: errorCode,
-        message: errorMessage,
-      });
-      return res.status(200).json({
-        code: errorCode,
-        message: errorMessage,
-      });
+      // Handle error
     });
+  res.end();
 }

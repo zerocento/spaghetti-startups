@@ -30,23 +30,33 @@ import {
 import ActionButton from '../components/ActionButton';
 import SeparatorText from '../components/SeparatorText';
 import Link from 'next/link';
+import {
+  getAuth,
+  getIdToken,
+  signInWithCustomToken,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { app } from '../lib/firebaseClientSetup';
+import { UserAuth } from '../context/authContext';
 
 export default function Login() {
+  const { signIn } = UserAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
-
   const handleShowPassword = () => setShowPassword(!showPassword);
 
   const handleChangePassword = (value) => {
     setPassword(value);
   };
 
-  async function handleSignup(e) {
+  async function handleLogin(e) {
     e.preventDefault();
-    const response = await fetch('/api/login', {
+    const auth = getAuth(app);
+    signIn(email, password);
+    /*const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -57,8 +67,10 @@ export default function Login() {
         password: password,
       }),
     });
+    
     const error = await response.json();
     console.log(error);
+    */
   }
   return (
     <>
@@ -97,7 +109,7 @@ export default function Login() {
               >
                 Effettua il login al tuo Account!
               </Heading>
-              <Box as="form" onSubmit={handleSignup} mb={10}>
+              <Box as="form" onSubmit={handleLogin} mb={10}>
                 {isEmailError && (
                   <Flex w={'100%'}>
                     <IoCloseCircle color={'#CE0025'} fontSize={'28px'} />
@@ -159,7 +171,11 @@ export default function Login() {
                     </InputRightElement>
                   </InputGroup>
                 </FormControl>
-                <ActionButton text="Accedi Subito!" margin={50} />
+                <ActionButton
+                  text="Accedi Subito!"
+                  margin={50}
+                  disabled={false}
+                />
               </Box>
               <SeparatorText text="OPPURE" />
               <HStack mt={'20px'}>
