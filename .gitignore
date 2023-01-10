@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.spaghetti-official-firebase-adminsdk-obw7h-ba4ec7bc44.json
 
 # testing
 /coverage

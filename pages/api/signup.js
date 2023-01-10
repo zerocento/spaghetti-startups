@@ -1,4 +1,5 @@
 const { getAuth } = require('firebase-admin/auth');
+
 const actionCodeSettings = {
   url: 'http://localhost:3000/login',
 };
