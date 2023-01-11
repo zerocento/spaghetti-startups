@@ -40,7 +40,7 @@ import { app } from '../lib/firebaseClientSetup';
 import { UserAuth } from '../context/authContext';
 
 export default function Login() {
-  const { signIn } = UserAuth();
+  const { signIn, user } = UserAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
