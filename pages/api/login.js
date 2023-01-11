@@ -1,5 +1,8 @@
 import { getAuth } from 'firebase-admin/auth';
-
+if (!global.moduleHasBeenRequired) {
+  global.moduleHasBeenRequired = true;
+  require('../../lib/firebaseAdminSetup');
+}
 export default function handler(req, res) {
   getAuth()
     .verifyIdToken(req.body.idToken)
