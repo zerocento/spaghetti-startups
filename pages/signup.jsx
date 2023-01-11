@@ -30,6 +30,7 @@ import {
 import ActionButton from '../components/ActionButton';
 import SeparatorText from '../components/SeparatorText';
 import Link from 'next/link';
+// create state object with email and password
 
 export default function Signup() {
   const router = useRouter();
@@ -70,7 +71,7 @@ export default function Signup() {
       });
       const error = await response.json();
       console.log(error);
-      if (error.code === 'auth/email-already-in-use') {
+      if (error.code === 'auth/email-already-exists') {
         setIsEmailError(true);
       } else {
         setIsEmailError(false);
@@ -123,10 +124,10 @@ export default function Signup() {
               </Heading>
               <Box as="form" onSubmit={handleSignup} mb={10}>
                 {isEmailError && (
-                  <Flex w={'100%'}>
+                  <Flex w={'100%'} >
                     <IoCloseCircle color={'#CE0025'} fontSize={'28px'} />
                     <Text
-                      color={'#CE0025'}
+                      color={'black'}
                       maxW="75%"
                       fontSize={'16px'}
                       ml={'15px'}
@@ -135,7 +136,7 @@ export default function Signup() {
                       L'indirizzo email inserito risulta già iscritto a
                       Spaghetti Startups.{' '}
                       <Link href="/privacy-policy">
-                        <Text as="u">Per favore, effettua la login </Text>
+                        <Text as="u" color={"#000046"}>Per favore, effettua la login </Text>
                       </Link>{' '}
                     </Text>
                   </Flex>

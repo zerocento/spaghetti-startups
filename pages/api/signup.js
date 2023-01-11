@@ -1,5 +1,5 @@
 const { getAuth } = require('firebase-admin/auth');
-
+require('../../lib/firebaseAdminSetup')
 const actionCodeSettings = {
   url: 'http://localhost:3000/login',
 };
@@ -33,7 +33,7 @@ export default function handler(req, res) {
     .catch((error) => {
       console.log('Error creating new user:', error);
       return res.status(200).json({
-        code: error,
+        code: error.code,
         message: error.message,
       });
     });

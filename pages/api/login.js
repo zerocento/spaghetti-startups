@@ -13,7 +13,11 @@ export default function handler(req, res) {
         });
     })
     .catch((error) => {
-      // Handle error
+      //return the error in an object with the following properties : error message
+      res.status(401).json({ error: error.message });
+      console.log(error);
+      console.log(error.message);
+      console.log(error.code);
     });
   res.end();
 }
