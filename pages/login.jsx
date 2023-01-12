@@ -55,8 +55,8 @@ export default function Login() {
   async function handleLogin(e) {
     e.preventDefault();
     const userCredential = await signIn(email, password);
-
-    if (!userCredential.emailVerified) {
+    console.log(userCredential);
+    if (!userCredential.user.emailVerified) {
       alert('Email non verificata');
       return;
     }
