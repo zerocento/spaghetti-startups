@@ -1,5 +1,5 @@
-import app from '../../lib/firebaseAdminSetup';
-import { sendVerificationEmail } from '../../lib/sendEmail';
+import app from '../../lib/firebase/firebaseAdminSetup';
+import { sendVerificationEmail } from '../../lib/sendgrid/sendEmail';
 
 const actionCodeSettings = {
   url: 'http://localhost:3000/login',

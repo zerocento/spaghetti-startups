@@ -6,7 +6,7 @@ import {
   getAuth,
 } from 'firebase/auth';
 import UserContext from './userContext';
-import { app } from '../lib/firebaseClientSetup';
+import { app } from '../lib/firebase/firebaseClientSetup';
 
 export const AuthContextProvider = ({ children }) => {
   const auth = getAuth(app);
