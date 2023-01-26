@@ -36,7 +36,7 @@ import {
   signInWithCustomToken,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { app } from '../lib/firebaseClientSetup';
+import { app } from '../lib/firebase/firebaseClientSetup';
 import { UserAuth } from '../context/authContext';
 
 export default function Login() {
