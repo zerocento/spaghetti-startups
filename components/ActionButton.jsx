@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import React from 'react';
 
-export default function ActionButton({ text, margin, disabled }) {
+export default function ActionButton({ text, margin, disabled, loading }) {
   return (
     <Button
       type="submit"
@@ -17,6 +17,7 @@ export default function ActionButton({ text, margin, disabled }) {
       _hover={{ background: '#1A237E', color: '#FFFFFF' }}
       _focus={{ background: '#1A237E', color: '#FFFFFF' }}
       isDisabled={disabled ? true : false}
+      isLoading={loading}
     >
       {text}
     </Button>

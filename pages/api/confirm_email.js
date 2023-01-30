@@ -1,4 +1,4 @@
-import { sendVerificationEmail } from '../../lib/sendgrid/sendEmail';
+import { sendVerificationEmail } from '../../lib/sendgrid/sendVerificationEmail';
 
 const actionCodeSettings = {
   url: 'http://localhost:3000/login',

@@ -1,4 +1,4 @@
-import { sendVerificationEmail } from '../../lib/sendgrid/sendEmail';
+import { sendResetPasswordEmail } from '../../lib/sendgrid/sendResetPasswordEmail';
 
 const actionCodeSettings = {
   url: 'http://localhost:3000/login',
@@ -6,7 +6,7 @@ const actionCodeSettings = {
 
 export default async function handler({ body }, res) {
   try {
-    await sendVerificationEmail(body.email, actionCodeSettings);
+    await sendResetPasswordEmail(body.email, actionCodeSettings);
 
     return res.status(200).json();
   } catch (error) {

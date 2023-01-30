@@ -15,7 +15,7 @@ import {
 import ActionButton from '../components/ActionButton';
 
 import { useForm } from 'react-hook-form';
-import { resend } from '../lib/api/resend';
+import { requestVerificationLink } from '../lib/api/resend';
 import ActionModal from '../components/ActionModal';
 
 export default function Resend() {
@@ -29,7 +29,7 @@ export default function Resend() {
 
   async function onSubmit({ email }) {
     try {
-      const res = await resend({ email });
+      const res = await requestVerificationLink({ email });
       console.log(res);
       setConfirmationSent(true);
     } catch (error) {
