@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { FaFacebookF } from 'react-icons/fa';
 import { BsGoogle } from 'react-icons/bs';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { IoCloseCircle } from 'react-icons/io5';
-import { BsDot } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Center,
   Flex,
+  FormErrorMessage,
   IconButton,
   Image,
   InputGroup,
@@ -36,33 +39,35 @@ import {
   signInWithCustomToken,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { app } from '../lib/firebase/firebaseClientSetup';
 import { UserAuth } from '../context/authContext';
+import { useForm } from 'react-hook-form';
 
 export default function Login() {
-  const { signIn, user } = UserAuth();
+  const { signIn } = UserAuth();
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    handleSubmit,
+    register,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
   const [showPassword, setShowPassword] = useState(false);
   const [isEmailError, setIsEmailError] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleChangePassword = (value) => {
-    setPassword(value);
-  };
-
-  async function handleLogin(e) {
-    e.preventDefault();
-    const userCredential = await signIn(email, password);
-    console.log(userCredential);
-    if (!userCredential.user.emailVerified) {
-      alert('Email non verificata');
-      return;
+  async function onSubmit({ email, password }) {
+    try {
+      const userCredential = await signIn(email, password);
+      if (!userCredential.user.emailVerified) {
+        setIsEmailError(true);
+      }
+      router.replace('/home');
+    } catch (error) {
+      console.log(error);
     }
-
-    router.replace('/');
   }
+
   return (
     <Box
       bg="#001A72"
@@ -99,52 +104,64 @@ export default function Login() {
             >
               Effettua il login al tuo Account!
             </Heading>
-            <Box as="form" onSubmit={handleLogin} mb={10}>
+            <Box as="form" onSubmit={handleSubmit(onSubmit)} mb={10}>
               {isEmailError && (
-                <Flex w={'100%'}>
-                  <IoCloseCircle color={'#CE0025'} fontSize={'28px'} />
-                  <Text
-                    color={'#CE0025'}
-                    maxW="75%"
-                    fontSize={'16px'}
-                    ml={'15px'}
-                    mb={'20px'}
-                  >
-                    L&apos;indirizzo email inserito risulta già iscritto a
-                    Spaghetti Startups.
-                    <Link href="/privacy-policy">
-                      <Text as="u">Per favore, effettua la login </Text>
+                <Alert status="error">
+                  <AlertIcon />
+                  <AlertTitle>Ouch!</AlertTitle>
+                  <AlertDescription>
+                    Il tuo account non è stato attivato correttamente.{' '}
+                    <Link href="/resend">
+                      <Text as="u" color={'#000046'}>
+                        Richiedi un&apos;altra mail di conferma
+                      </Text>
                     </Link>
-                  </Text>
-                </Flex>
+                  </AlertDescription>
+                </Alert>
               )}
-              <FormControl mb={'15px'}>
-                <FormLabel fontSize={'16px'} color={'#000046'}>
-                  E-mail
+              <FormControl isInvalid={!!errors.email} mb={'15px'}>
+                <FormLabel htmlFor="email" fontSize={'16px'} color={'#000046'}>
+                  Email
                 </FormLabel>
                 <Input
+                  id="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   placeholder={'Inserisci il tuo indirizzo mail'}
                   border="1px"
                   borderColor="#000046"
                   _hover={{ borderColor: '#000046' }}
+                  {...register('email', {
+                    required: 'Il campo è obbligatorio',
+                  })}
                 />
+                <FormErrorMessage>
+                  {errors.email && errors.email.message}
+                </FormErrorMessage>
               </FormControl>
-              <FormControl>
-                <FormLabel fontSize={'16px'} color={'#000046'}>
+              <FormControl isInvalid={!!errors.password} mb={'15px'}>
+                <FormLabel
+                  htmlFor="password"
+                  fontSize={'16px'}
+                  color={'#000046'}
+                >
                   Password
                 </FormLabel>
                 <InputGroup size="md">
                   <Input
+                    id="password"
                     type={showPassword ? 'text' : 'password'}
-                    value={password}
-                    onChange={(e) => handleChangePassword(e.target.value)}
                     placeholder={'Crea una password'}
                     border="1px"
                     borderColor="#000046"
                     _hover={{ borderColor: '#000046' }}
+                    {...register('password', {
+                      required: 'Il campo è obbligatorio',
+                      pattern: {
+                        value:
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                        message: 'Il formato non è valido',
+                      },
+                    })}
                   />
                   <InputRightElement width="4.5rem">
                     <IconButton
@@ -160,6 +177,9 @@ export default function Login() {
                     />
                   </InputRightElement>
                 </InputGroup>
+                <FormErrorMessage>
+                  {errors.password && errors.password.message}
+                </FormErrorMessage>
               </FormControl>
               <ActionButton
                 text="Accedi Subito!"

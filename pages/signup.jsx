@@ -7,6 +7,10 @@ import { BsDot } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Flex,
   FormErrorMessage,
   IconButton,
@@ -32,8 +36,10 @@ import SeparatorText from '../components/SeparatorText';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { signup } from '../lib/api/signup';
+import { UserAuth } from '../context/authContext';
+import withUserSession from '../components/withUserSession';
 
-export default function Signup() {
+function Signup() {
   const router = useRouter();
   const {
     handleSubmit,
@@ -117,24 +123,19 @@ export default function Signup() {
               maxW={'400px'}
             >
               {isEmailError && (
-                <Flex w={'100%'}>
-                  <IoCloseCircle color={'#CE0025'} fontSize={'28px'} />
-                  <Text
-                    color={'black'}
-                    maxW="75%"
-                    fontSize={'16px'}
-                    ml={'15px'}
-                    mb={'20px'}
-                  >
-                    L'indirizzo email inserito risulta già iscritto a Spaghetti
-                    Startups.{' '}
+                <Alert status="error">
+                  <AlertIcon />
+                  <AlertTitle>Ouch!</AlertTitle>
+                  <AlertDescription>
+                    L&apos;indirizzo email inserito risulta già iscritto a
+                    Spaghetti Startups.
                     <Link href="/privacy-policy">
                       <Text as="u" color={'#000046'}>
-                        Per favore, effettua la login{' '}
+                        Per favore, effettua la login
                       </Text>
-                    </Link>{' '}
-                  </Text>
-                </Flex>
+                    </Link>
+                  </AlertDescription>
+                </Alert>
               )}
               <FormControl isInvalid={!!errors.email} mb={'15px'}>
                 <FormLabel htmlFor="email" fontSize={'16px'} color={'#000046'}>
@@ -297,3 +298,5 @@ export default function Signup() {
     </Box>
   );
 }
+
+export default withUserSession(Signup);

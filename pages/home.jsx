@@ -1,9 +1,13 @@
+import { Button } from '@chakra-ui/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import React from 'react';
+import withUserSession from '../components/withUserSession';
+import { UserAuth } from '../context/authContext';
 import styles from '../styles/Home.module.css';
 
-export default function Home() {
+function Home() {
+  const { logout } = UserAuth();
   return (
     <div className={styles.container}>
       <Head>
@@ -18,8 +22,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          <Button onClick={logout}>Logout</Button>
         </p>
 
         <div className={styles.grid}>
@@ -68,3 +71,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withUserSession(Home);
