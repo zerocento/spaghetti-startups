@@ -33,12 +33,6 @@ import {
 import ActionButton from '../components/ActionButton';
 import SeparatorText from '../components/SeparatorText';
 import Link from 'next/link';
-import {
-  getAuth,
-  getIdToken,
-  signInWithCustomToken,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
 import { UserAuth } from '../context/authContext';
 import { useForm } from 'react-hook-form';
 
@@ -70,8 +64,12 @@ export default function Login() {
 
   return (
     <Box
-      bg="#001A72"
-      w={['100%', '100vw']}
+      bg="#000051"
+      backgroundImage={['', '/img/login_image_desktop.svg']}
+      backgroundSize={'contain'}
+      backgroundRepeat={'no-repeat'}
+      backgroundPosition={'center'}
+      w={['100vw']}
       h={['100%', '100vh']}
       p={4}
       boxSizing={'border-box'}
@@ -81,13 +79,14 @@ export default function Login() {
         gap={6}
         h={'100%'}
       >
-        <Box
+        <Flex
           bg="#FFFFFF"
           borderRadius={'4px'}
           w="100%"
           h="100%"
-          p={[2, '10%']}
-          pb={['20%', '0']}
+          justifyContent={'center'}
+          alignItems={'center'}
+          p={['20px', '']}
         >
           <Box>
             {/*  -----------------------------------------------------------------------------------------------
@@ -104,7 +103,14 @@ export default function Login() {
             >
               Effettua il login al tuo Account!
             </Heading>
-            <Box as="form" onSubmit={handleSubmit(onSubmit)} mb={10}>
+            <Box
+              as="form"
+              onSubmit={handleSubmit(onSubmit)}
+              mb={10}
+              mt={0}
+              mx={'auto'}
+              maxW={'400px'}
+            >
               {isEmailError && (
                 <Alert status="error">
                   <AlertIcon />
@@ -186,53 +192,66 @@ export default function Login() {
                 margin={50}
                 disabled={false}
               />
+              <SeparatorText text="OPPURE" />
+              <HStack mt={'20px'}>
+                <Button
+                  w={'100%'}
+                  leftIcon={<BsGoogle />}
+                  bg={'#FFFFFF'}
+                  color={'#1A237E'}
+                  fontSize={'16px'}
+                  border={'1px'}
+                  borderColor="#1A237E"
+                  padding={'9px, 16px, 9px, 16px'}
+                  _hover={{ borderColor: '#1A237E' }}
+                >
+                  Google
+                </Button>
+                <Button
+                  w={'100%'}
+                  leftIcon={<FaFacebookF />}
+                  bg={'#FFFFFF'}
+                  color={'#1A237E'}
+                  fontSize={'16px'}
+                  border={'1px'}
+                  borderColor="#1A237E"
+                  padding={'9px, 16px, 9px, 16px'}
+                  _hover={{ borderColor: '#1A237E' }}
+                >
+                  Facebook
+                </Button>
+              </HStack>
+              <Text
+                textAlign={'center'}
+                fontSize={'16px'}
+                color={'#000051'}
+                mt="5"
+              >
+                Non hai ancora un account?
+              </Text>
+              <Text
+                textAlign={'center'}
+                fontSize={'16px'}
+                color={'#000051'}
+                position={'relative'}
+                zIndex={10}
+              >
+                Cosa aspetti ,{' '}
+                <Link href={'/signup'}>
+                  <Text as={'u'} color="#1A237E">
+                    Registrati?
+                  </Text>
+                </Link>
+              </Text>
             </Box>
-            <SeparatorText text="OPPURE" />
-            <HStack mt={'20px'}>
-              <Button
-                w={'100%'}
-                leftIcon={<BsGoogle />}
-                bg={'#FFFFFF'}
-                color={'#1A237E'}
-                fontSize={'16px'}
-                border={'1px'}
-                borderColor="#1A237E"
-                padding={'9px, 16px, 9px, 16px'}
-                _hover={{ borderColor: '#1A237E' }}
-              >
-                Google
-              </Button>
-              <Button
-                w={'100%'}
-                leftIcon={<FaFacebookF />}
-                bg={'#FFFFFF'}
-                color={'#1A237E'}
-                fontSize={'16px'}
-                border={'1px'}
-                borderColor="#1A237E"
-                padding={'9px, 16px, 9px, 16px'}
-                _hover={{ borderColor: '#1A237E' }}
-              >
-                Facebook
-              </Button>
-            </HStack>
           </Box>
-        </Box>
-
-        <VStack
-          alignItems={'center'}
-          justifyContent={'center'}
-          w={'100%'}
-          h={'100%'}
-        >
-          <Image
-            src="/img/iconSignup.png"
-            w={['100%', '70%']}
-            mt={['-100px', '0']}
-            alt="Picture of the author"
-          />
-        </VStack>
+        </Flex>
       </Grid>
+      <Image
+        src="/img/login_image_mobile.svg"
+        display={['', 'none']}
+        mt={'-107px'}
+      ></Image>
     </Box>
   );
 }

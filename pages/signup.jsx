@@ -36,7 +36,6 @@ import SeparatorText from '../components/SeparatorText';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { signup } from '../lib/api/signup';
-import { UserAuth } from '../context/authContext';
 import withUserSession from '../components/withUserSession';
 
 function Signup() {
@@ -80,7 +79,7 @@ function Signup() {
 
   return (
     <Box
-      bg="#001A72"
+      bg="#000051"
       w={['100%', '100vw']}
       h={['100%', '100vh']}
       p={4}
@@ -91,13 +90,14 @@ function Signup() {
         gap={6}
         h={'100%'}
       >
-        <Box
+        <Flex
           bg="#FFFFFF"
           borderRadius={'4px'}
           w="100%"
           h="100%"
-          p={[2, '10%']}
-          pb={['20%', '0']}
+          justifyContent={'center'}
+          alignItems={'center'}
+          p={['20px', '']}
         >
           <Box>
             {/*  -----------------------------------------------------------------------------------------------
@@ -237,49 +237,62 @@ function Signup() {
                 disabled={isSubmitting}
                 margin={50}
               />
+              <SeparatorText text="OPPURE" />
+              <HStack mt={'20px'}>
+                <Button
+                  w={'100%'}
+                  leftIcon={<BsGoogle />}
+                  bg={'#FFFFFF'}
+                  color={'#1A237E'}
+                  fontSize={'16px'}
+                  border={'1px'}
+                  borderColor="#1A237E"
+                  padding={'9px, 16px, 9px, 16px'}
+                  _hover={{ borderColor: '#1A237E' }}
+                >
+                  Google
+                </Button>
+                <Button
+                  w={'100%'}
+                  leftIcon={<FaFacebookF />}
+                  bg={'#FFFFFF'}
+                  color={'#1A237E'}
+                  fontSize={'16px'}
+                  border={'1px'}
+                  borderColor="#1A237E"
+                  padding={'9px, 16px, 9px, 16px'}
+                  _hover={{ borderColor: '#1A237E' }}
+                >
+                  Facebook
+                </Button>
+              </HStack>
+              <Text fontSize={'12px'} color={'#000046'} mt={'15px'}>
+                Registrandoti dai il tuo consenso alle{' '}
+                <Link href="/privacy-policy">
+                  <Text as="u">Privacy Policy</Text>{' '}
+                </Link>{' '}
+                e alle{' '}
+                <Link href="/condizioni-di-servizio">
+                  {' '}
+                  <Text as="u">Condizioni di servizio </Text>{' '}
+                </Link>
+              </Text>
+              <Text
+                textAlign={'center'}
+                fontSize={'16px'}
+                color={'#000051'}
+                mt="5"
+              >
+                Sei gia dei nostri? ,{' '}
+                <Link href={'/login'}>
+                  <Text as={'u'} color="#1A237E">
+                    Accedi?
+                  </Text>
+                </Link>
+              </Text>
             </Box>
-            <SeparatorText text="OPPURE" />
-            <HStack mt={'20px'}>
-              <Button
-                w={'100%'}
-                leftIcon={<BsGoogle />}
-                bg={'#FFFFFF'}
-                color={'#1A237E'}
-                fontSize={'16px'}
-                border={'1px'}
-                borderColor="#1A237E"
-                padding={'9px, 16px, 9px, 16px'}
-                _hover={{ borderColor: '#1A237E' }}
-              >
-                Google
-              </Button>
-              <Button
-                w={'100%'}
-                leftIcon={<FaFacebookF />}
-                bg={'#FFFFFF'}
-                color={'#1A237E'}
-                fontSize={'16px'}
-                border={'1px'}
-                borderColor="#1A237E"
-                padding={'9px, 16px, 9px, 16px'}
-                _hover={{ borderColor: '#1A237E' }}
-              >
-                Facebook
-              </Button>
-            </HStack>
-            <Text fontSize={'12px'} color={'#000046'} mt={'15px'}>
-              Registrandoti dai il tuo consenso alle{' '}
-              <Link href="/privacy-policy">
-                <Text as="u">Privacy Policy</Text>{' '}
-              </Link>{' '}
-              e alle{' '}
-              <Link href="/condizioni-di-servizio">
-                {' '}
-                <Text as="u">Condizioni di servizio </Text>{' '}
-              </Link>
-            </Text>
           </Box>
-        </Box>
+        </Flex>
 
         <VStack
           alignItems={'center'}
@@ -290,7 +303,7 @@ function Signup() {
           <Image
             src="/img/iconSignup.png"
             w={['100%', '70%']}
-            mt={['-100px', '0']}
+            mt={['-60px', '0']}
             alt="Picture of the author"
           />
         </VStack>
