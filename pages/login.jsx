@@ -56,8 +56,9 @@ export default function Login() {
       console.log(userCredential);
       if (!userCredential.user.emailVerified) {
         setIsEmailError(true);
+      } else {
+        router.replace('/home');
       }
-      router.replace('/home');
     } catch (error) {
       if (
         error.code == 'auth/user-not-found' ||
@@ -74,7 +75,7 @@ export default function Login() {
     <Box
       bg="#000051"
       backgroundImage={['', '/img/login_image_desktop.svg']}
-      backgroundSize={'contain'}
+      backgroundSize={'cover'}
       backgroundRepeat={'no-repeat'}
       backgroundPosition={'center'}
       w={['100vw']}

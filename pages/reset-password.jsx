@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { verifyPasswordResetCode, confirmPasswordReset } from 'firebase/auth';
 
 import {
   Image,
@@ -27,9 +28,11 @@ import { resetPassword } from '../lib/api/reset';
 import ActionModal from '../components/ActionModal';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
+import { UserAuth } from '../context/authContext';
 
 export default function ResetPassword() {
   const router = useRouter();
+  const { handleResetPassword } = UserAuth();
   const {
     handleSubmit,
     register,
@@ -40,12 +43,20 @@ export default function ResetPassword() {
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  async function onSubmit({ password, confirmPassword }) {
+  async function onSubmit({ password }) {
     try {
-      const res = await resetPassword({ password });
-      setConfirmationSent(true);
+      if (router.query.oobCode) {
+        const oobCode = router.query.oobCode;
+        handleResetPassword(oobCode, password);
+        // Localize the UI to the selected language as determined by the lang
+        // parameter.
+
+        // Verify the password reset code is valid.
+      }
+      //const res = await resetPassword({ password });
+      //setConfirmationSent(true);
     } catch (error) {
-      setConfirmationSent(false);
+      //setConfirmationSent(false);
     }
   }
 
@@ -119,7 +130,7 @@ export default function ResetPassword() {
                       required: 'Il campo è obbligatorio',
                       pattern: {
                         value:
-                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{8,}$/,
                         message: 'Il formato non è valido',
                       },
                     })}
@@ -140,58 +151,6 @@ export default function ResetPassword() {
                 </InputGroup>
                 <FormErrorMessage>
                   {errors.password && errors.password.message}
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl isInvalid={!!errors.confirmPassword} mb={'15px'}>
-                <FormLabel
-                  htmlFor="confirmPassword"
-                  fontSize={'16px'}
-                  color={'#000046'}
-                >
-                  Conferma Password
-                </FormLabel>
-                <InputGroup size="md">
-                  <Input
-                    id="confirmPassword"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder={'Conferma password'}
-                    border="1px"
-                    borderColor="#000046"
-                    _hover={{ borderColor: '#000046' }}
-                    {...register('confirmPassword', {
-                      required: 'Il campo è obbligatorio',
-                      validate: (value, formValues) => {
-                        const regexp = new RegExp(
-                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-                        );
-                        if (!regexp.test(value)) {
-                          return 'Il formato non è valido';
-                        }
-
-                        if (value !== formValues.password) {
-                          return 'Le due password non coincidono';
-                        }
-
-                        return true;
-                      },
-                    })}
-                  />
-                  <InputRightElement width="4.5rem">
-                    <IconButton
-                      aria-label="Search database"
-                      fontSize={'20px'}
-                      icon={
-                        showPassword ? <AiFillEye /> : <AiFillEyeInvisible />
-                      }
-                      onClick={handleShowPassword}
-                      bg={'transparent'}
-                      _hover={{ background: 'transparent' }}
-                      _focus={{ background: 'transparent' }}
-                    />
-                  </InputRightElement>
-                </InputGroup>
-                <FormErrorMessage>
-                  {errors.confirmPassword && errors.confirmPassword.message}
                 </FormErrorMessage>
               </FormControl>
               <Box mt={'30px'}>
