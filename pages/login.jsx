@@ -53,12 +53,22 @@ export default function Login() {
   async function onSubmit({ email, password }) {
     try {
       const userCredential = await signIn(email, password);
+      console.log(userCredential);
       if (!userCredential.user.emailVerified) {
         setIsEmailError(true);
       }
       router.replace('/home');
     } catch (error) {
-      console.log(error);
+      console.log(error.code);
+      if (
+        error.code == 'auth/wrong-password' ||
+        error.code == 'auth/user-not-found'
+      ) {
+        alert('Credenziali Errate');
+      }
+      if (error.code == 'auth/too-many-requests') {
+        alert('Hai eseguito troppi tentativi, riprova');
+      }
     }
   }
 
@@ -164,7 +174,7 @@ export default function Login() {
                       required: 'Il campo è obbligatorio',
                       pattern: {
                         value:
-                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{8,}$/,
                         message: 'Il formato non è valido',
                       },
                     })}
