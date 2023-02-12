@@ -17,7 +17,11 @@ export const AuthContextProvider = ({ children }) => {
     return signOut(auth);
   };
 
+<<<<<<< HEAD
   const signIn = async (email, password) => {
+=======
+  const signIn = (email, password) => {
+>>>>>>> db8bdd0fc87d032cba8134300206b3319b8c0a47
     return signInWithEmailAndPassword(auth, email, password);
   };
 

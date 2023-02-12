@@ -61,7 +61,6 @@ export default function Login() {
     } catch (error) {
       console.log(error.code);
       if (
-        error.code == 'auth/wrong-password' ||
         error.code == 'auth/user-not-found'
       ) {
         alert('Credenziali Errate');
@@ -69,9 +68,6 @@ export default function Login() {
       if (error.code == 'auth/too-many-requests') {
         alert('Hai eseguito troppi tentativi, riprova');
       }
-    }
-  }
-
   return (
     <Box
       bg="#000051"
@@ -174,7 +170,11 @@ export default function Login() {
                       required: 'Il campo è obbligatorio',
                       pattern: {
                         value:
+<<<<<<< HEAD
                           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{8,}$/,
+=======
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+>>>>>>> db8bdd0fc87d032cba8134300206b3319b8c0a47
                         message: 'Il formato non è valido',
                       },
                     })}
