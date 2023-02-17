@@ -47,7 +47,7 @@ export default function ResetPassword() {
     try {
       if (router.query.oobCode) {
         const oobCode = router.query.oobCode;
-        handleResetPassword(oobCode, password);
+        return handleResetPassword(oobCode, password);
         // Localize the UI to the selected language as determined by the lang
         // parameter.
 
