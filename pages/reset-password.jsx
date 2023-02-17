@@ -24,7 +24,6 @@ import {
 import ActionButton from '../components/ActionButton';
 
 import { useForm } from 'react-hook-form';
-import { resetPassword } from '../lib/api/reset';
 import ActionModal from '../components/ActionModal';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';

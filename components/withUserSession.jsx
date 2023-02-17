@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { UserAuth } from '../context/authContext';
 
 const PROTECTED_ROUTES = ['/home'];
-const PUBLIC_ROUTES = ['/signup'];
+const PUBLIC_ROUTES = ['/signup', '/'];
 
 const withUserSession = (WrappedComponent) => {
   return (props) => {
