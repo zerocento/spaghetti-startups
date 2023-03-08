@@ -11,8 +11,6 @@ import React from 'react';
 export default function confirmation_page({ oob, mode }) {
   const router = useRouter();
   const { id } = router.query;
-  console.log('oob', oob);
-  console.log('mode', mode);
 
   return (
     <div>

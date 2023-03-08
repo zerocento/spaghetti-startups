@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { verifyPasswordResetCode, confirmPasswordReset } from 'firebase/auth';
+
+import { useForm } from 'react-hook-form';
 
 import {
   Image,
@@ -21,13 +22,11 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import ActionButton from '../components/ActionButton';
+import { ActionModal, ActionButton } from '../../components';
 
-import { useForm } from 'react-hook-form';
-import ActionModal from '../components/ActionModal';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { BsDot } from 'react-icons/bs';
-import { UserAuth } from '../context/authContext';
+import { UserAuth } from '../../context/authContext';
 
 export default function ResetPassword() {
   const router = useRouter();

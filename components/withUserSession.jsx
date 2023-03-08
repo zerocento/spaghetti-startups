@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { UserAuth } from '../context/authContext';
 
 const PROTECTED_ROUTES = ['/home'];
-const PUBLIC_ROUTES = ['/signup', '/'];
+const PUBLIC_ROUTES = ['/signup', '/login', '/'];
 
 const withUserSession = (WrappedComponent) => {
   return (props) => {
@@ -15,7 +15,7 @@ const withUserSession = (WrappedComponent) => {
       // Perform session check and update isSessionValid accordingly
       const checkSession = async () => {
         if (user && PUBLIC_ROUTES.includes(router.route)) {
-          router.replace('/home');
+          router.replace('/');
           return;
         }
 

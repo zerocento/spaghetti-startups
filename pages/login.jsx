@@ -30,8 +30,8 @@ import {
   HStack,
   Text,
 } from '@chakra-ui/react';
-import ActionButton from '../components/ActionButton';
-import SeparatorText from '../components/SeparatorText';
+import { ActionButton, SeparatorText } from '../components';
+
 import Link from 'next/link';
 import { UserAuth } from '../context/authContext';
 import { useForm } from 'react-hook-form';

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-
-import { Image, FormErrorMessage } from '@chakra-ui/react';
-
 import {
+  Image,
+  FormErrorMessage,
   VStack,
   Grid,
   Box,
@@ -12,14 +10,12 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import ActionButton from '../components/ActionButton';
-
 import { useForm } from 'react-hook-form';
-import { requestVerificationLink } from '../lib/api/resend';
-import ActionModal from '../components/ActionModal';
+
+import { ActionModal, ActionButton } from '../../components';
+import { requestVerificationLink } from '../../lib/api/resend';
 
 export default function Resend() {
-  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -30,7 +26,6 @@ export default function Resend() {
   async function onSubmit({ email }) {
     try {
       const res = await requestVerificationLink({ email });
-      console.log(res);
       setConfirmationSent(true);
     } catch (error) {
       setConfirmationSent(false);

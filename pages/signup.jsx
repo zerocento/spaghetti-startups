@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FaFacebookF } from 'react-icons/fa';
 import { BsGoogle } from 'react-icons/bs';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { IoCloseCircle } from 'react-icons/io5';
 import { BsDot } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
@@ -31,12 +30,10 @@ import {
   HStack,
   Text,
 } from '@chakra-ui/react';
-import ActionButton from '../components/ActionButton';
-import SeparatorText from '../components/SeparatorText';
+import { ActionButton, SeparatorText, withUserSession } from '../components';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { signup } from '../lib/api/signup';
-import withUserSession from '../components/withUserSession';
 
 function Signup() {
   const router = useRouter();
@@ -71,7 +68,7 @@ function Signup() {
     } else {
       setIsEmailError(false);
       router.push({
-        pathname: '/confirmation_pending',
+        pathname: '/auth/confirmation_pending',
         query: { prop: email },
       });
     }
@@ -301,7 +298,7 @@ function Signup() {
           h={'100%'}
         >
           <Image
-            src="/img/iconSignup.png"
+            src="/img/signup_image.svg"
             w={['100%', '70%']}
             mt={['-60px', '0']}
             alt="Picture of the author"

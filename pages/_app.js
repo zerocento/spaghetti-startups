@@ -4,7 +4,7 @@ import '@fontsource/Poppins/400.css';
 import '@fontsource/Poppins/500.css';
 
 import React from 'react';
-import theme from '../theme';
+import theme from '../styles/theme';
 import { AuthContextProvider } from '../context/authContext';
 
 function MyApp({ Component, pageProps }) {

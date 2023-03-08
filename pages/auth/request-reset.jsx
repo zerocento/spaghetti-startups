@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-
-import { Image, FormErrorMessage } from '@chakra-ui/react';
-
 import {
+  Image,
+  FormErrorMessage,
   VStack,
   Grid,
   Box,
@@ -12,13 +10,13 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import ActionButton from '../components/ActionButton';
-
 import { useForm } from 'react-hook-form';
-import ActionModal from '../components/ActionModal';
 
-export default function resend() {
-  const router = useRouter();
+import { requestResetLink } from '../../lib/api/reset';
+
+import { ActionModal, ActionButton } from '../../components';
+
+export default function RequestReset() {
   const {
     handleSubmit,
     register,
@@ -28,18 +26,7 @@ export default function resend() {
 
   async function onSubmit({ email }) {
     try {
-      const res = setConfirmationSent(true);
-      const emailSent = await fetch(
-        'http://localhost:3000/api/sendVerificationEmailToCustomer',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(email),
-        }
-      );
+      await requestResetLink({ email });
       setConfirmationSent(true);
     } catch (error) {
       setConfirmationSent(false);
@@ -93,7 +80,7 @@ export default function resend() {
               fontWeight={'500'}
               color={'#000046'}
             >
-              Richiedi la conferma della tua mail!
+              Richiedi il reset della tua password
             </Heading>
             <Box as="form" onSubmit={handleSubmit(onSubmit)} mb={10}>
               <FormControl isInvalid={!!errors.email} mb={'15px'}>

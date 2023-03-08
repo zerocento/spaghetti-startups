@@ -1,10 +1,7 @@
-import { Box, Center, Flex, Image, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import React from 'react';
 
 export default function confirmation_pending() {
-  const router = useRouter();
-  const propValue = router.query.prop;
   return (
     <Flex
       height={'100vh'}

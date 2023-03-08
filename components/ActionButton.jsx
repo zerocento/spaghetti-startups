@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import React from 'react';
 
-export default function ActionButton({ text, margin, disabled, loading }) {
+const ActionButton = ({ text, margin, disabled, loading }) => {
   return (
     <Button
       type="submit"
@@ -22,4 +22,6 @@ export default function ActionButton({ text, margin, disabled, loading }) {
       {text}
     </Button>
   );
-}
+};
+
+export default ActionButton;
